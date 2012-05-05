@@ -11,23 +11,17 @@ program_desc 'Describe your application here'
 
 version Claret::VERSION
 
-FILE = File.join(ENV['HOME'],'.claret.yml')
-
 commands_from 'claret/commands'
 
-task_list_serializer = Claret::TaskListYamlSerializer.new
+task_list_serializer = Claret::TaskListYamlSerializer.new(File.join(ENV['HOME'],'.claret.yml'))
 
 pre do |global,command,options,args|
-  begin
-    $task_list = task_list_serializer.read(File.open(FILE))
-  rescue Errno::ENOENT
-    $task_list = Claret::TaskList.new
-  end
+  $task_list = task_list_serializer.read
   true
 end
 
 post do
-  task_list_serializer.write($task_list,File.open(FILE,'w'))
+  task_list_serializer.write($task_list)
 end
 
 exit run(ARGV)

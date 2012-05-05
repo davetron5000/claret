@@ -2,7 +2,6 @@ Feature: I can complete tasks
   In order to keep track of things to do
   I need to be able to mark tasks as done
 
-  @wip
   Scenario Outline: Complete a task
     Given there are three tasks in the task list
     When I successfully run `claret <command> 1`
