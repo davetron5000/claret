@@ -26,4 +26,10 @@ pre do |global,command,options,args|
   true
 end
 
+post do
+  File.open(FILE,'w') do |file|
+    file.puts $tasks.to_yaml
+  end
+end
+
 exit run(ARGV)

@@ -26,7 +26,20 @@ Given /^there are three tasks in the task list$/ do
 end
 
 Then /^the output should show the three tasks$/ do
-  @locals[:tasks].each do |task|
-    step %{the output should contain "#{task}"}
+  @locals[:tasks].each_with_index do |task,index|
+    step %{the output should contain "[#{index}] #{task}"}
   end
 end
+
+Then /^the second task should not show up by default$/ do
+  step %{I successfully run `claret ls`}
+  @locals[:tasks].each_with_index do |task,index|
+    if index == 1
+      step %{the output should not contain "#{task}"}
+    else
+      step %{the output should contain "#{task}"}
+    end
+  end
+end
+
+
