@@ -1,0 +1,6 @@
+= claret
+
+Describe your project here
+
+:include:claret.rdoc
+
