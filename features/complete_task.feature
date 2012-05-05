@@ -12,3 +12,10 @@ Feature: I can complete tasks
     When I run `claret done 4`
     Then the exit status should not be 0
     And the stderr should contain "No task with id 4"
+
+  Scenario: Missing the index generates error and help
+    Given there are three tasks in the task list
+    When I run `claret done`
+    Then the exit status should not be 0
+    And the stderr should contain "task_id is required"
+    And the help should be printed for "done"

@@ -42,4 +42,6 @@ Then /^the second task should not show up by default$/ do
   end
 end
 
-
+Then /^the help should be printed for "([^"]*)"$/ do |arg1|
+  step %{the output should contain "task_id"}
+end
