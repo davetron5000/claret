@@ -2,7 +2,7 @@
 
 require 'rubygems'
 require 'gli'
-require 'claret/version'
+require 'claret'
 require 'yaml'
 
 include GLI::App
@@ -15,21 +15,19 @@ FILE = File.join(ENV['HOME'],'.claret.yml')
 
 commands_from 'claret/commands'
 
+task_list_serializer = Claret::TaskListYamlSerializer.new
+
 pre do |global,command,options,args|
-  $tasks = []
-  if File.exists?(FILE)
-    $tasks = YAML::load(File.open(FILE))
-    $tasks.each do |task|
-      task.force_encoding("UTF-8")
-    end
+  begin
+    $task_list = task_list_serializer.read(File.open(FILE))
+  rescue Errno::ENOENT
+    $task_list = Claret::TaskList.new
   end
   true
 end
 
 post do
-  File.open(FILE,'w') do |file|
-    file.puts $tasks.to_yaml
-  end
+  task_list_serializer.write($task_list,File.open(FILE,'w'))
 end
 
 exit run(ARGV)

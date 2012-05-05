@@ -20,9 +20,11 @@ end
 
 Given /^there are three tasks in the task list$/ do
   @locals[:tasks] = ['Rake Leaves','Take out Garbage','Do Dishes']
-  File.open(File.join(ENV['HOME'],'.claret.yml'),'w') do |file|
-    file.puts @locals[:tasks].to_yaml
+  task_list = Claret::TaskList.new
+  @locals[:tasks].each_with_index do |name,index|
+    task_list << Claret::Task.new(name).tap { |_| _.id = index }
   end
+  Claret::TaskListYamlSerializer.new.write(task_list,File.open(File.join(ENV['HOME'],'.claret.yml'),'w'))
 end
 
 Then /^the output should show the three tasks$/ do

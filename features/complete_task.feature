@@ -2,10 +2,16 @@ Feature: I can complete tasks
   In order to keep track of things to do
   I need to be able to mark tasks as done
 
-  Scenario: Complete a task
+  @wip
+  Scenario Outline: Complete a task
     Given there are three tasks in the task list
-    When I successfully run `claret done 1`
+    When I successfully run `claret <command> 1`
     Then the second task should not show up by default
+
+    Examples:
+      |command   |
+      |done      |
+      |task done |
 
   Scenario: Complete a non-existent task generates an error
     Given there are three tasks in the task list

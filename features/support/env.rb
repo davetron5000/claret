@@ -1,6 +1,7 @@
 require 'aruba/cucumber'
 require 'fileutils'
 require 'yaml'
+require 'claret'
 
 
 ENV['PATH'] = "#{File.expand_path(File.dirname(__FILE__) + '/../../bin')}#{File::PATH_SEPARATOR}#{ENV['PATH']}"
