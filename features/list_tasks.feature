@@ -19,10 +19,16 @@ Feature: I can list tasks
     Then the output should show the three tasks
     And the completed task should be highlighted with the completion date
 
-    @wip
   Scenario: List in-progress tasks,
     Given there are three tasks in the task list
     And one of them has been started
     And another one of them has been completed
     When I successfully run `claret ls wip`
     Then the output should show the started task only
+
+  Scenario: Show started and completed dates in listing
+    Given there are three tasks in the task list
+    And one of them has been started
+    And that same one has been completed
+    When I successfully run `claret ls all`
+    Then the output should show the started/completed task's start and completed dates

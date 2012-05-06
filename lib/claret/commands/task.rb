@@ -19,14 +19,3 @@ command :task do |task_command|
     end
   end
 end
-
-
-desc 'Complete a task'
-arg_name 'task_id'
-command :done do |c|
-  c.action do |global_options,options,args|
-    command = commands.values.select { |_| _.name == :task }.first.commands.values.select { |_| _.name == :done }.first
-    command.execute(global_options,options,args)
-  end
-end
-

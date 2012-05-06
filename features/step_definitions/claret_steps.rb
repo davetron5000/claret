@@ -49,11 +49,11 @@ Then /^the help should be printed for "([^"]*)"$/ do |arg1|
 end
 
 Given /^one of them is completed$/ do
-  step %{I successfully run `claret done 1`}
+  step %{I successfully run `claret task done 1`}
 end
 
 Given /^another one of them has been completed$/ do
-  step %{I successfully run `claret done 2`}
+  step %{I successfully run `claret task done 2`}
 end
 
 Then /^the completed task should be highlighted with the completion date$/ do
@@ -78,4 +78,13 @@ Then /^the output should show the started task only$/ do
       step %{the output should not contain "#{task}"}
     end
   end
+end
+
+
+Given /^that same one has been completed$/ do
+  step %{I successfully run `claret task done #{@locals[:started_task_id]}`}
+end
+
+Then /^the output should show the started\/completed task's start and completed dates$/ do
+  step %{the output should match /#{@locals[:tasks][@locals[:started_task_id]]} \\\(started on .*, completed on .*\\\)/}
 end

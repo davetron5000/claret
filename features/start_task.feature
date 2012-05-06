@@ -14,6 +14,13 @@ Feature: I can start tasks
     Then the exit status should not be 0
     And the stderr should contain "Task 1 is already started"
 
+  Scenario: Start a completed task generates an error
+    Given there are three tasks in the task list
+    Given I successfully run `claret task done 1`
+    When I run `claret task start 1`
+    Then the exit status should not be 0
+    And the stderr should contain "Task 1 is completed"
+
   Scenario: Complete a non-existent task generates an error
     Given there are three tasks in the task list
     When I run `claret task start 4`

@@ -26,11 +26,18 @@ module Claret
       :incomplete => lambda { |task| !task.completed? },
     }
 
+    ADDITIONAL = [
+      lambda { |task| "started on #{task.started_date}" if task.started? },
+      lambda { |task| "completed on #{task.completed_date}" if task.completed? },
+    ]
+
     def additional_info(task)
-      info = ""
-      info = " (completed on #{task.completed_date})" if task.completed?
-      info = " (started on #{task.started_date})" if task.started?
-      info
+      info = ADDITIONAL.map { |func| func.call(task) }.compact.join(', ')
+      if info != ''
+        " (#{info})"
+      else
+        info
+      end
     end
   end
 end

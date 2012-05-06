@@ -42,6 +42,7 @@ module Claret
     # Starts this task
     def start!
       raise "Task #{self.id} is already started" if started?
+      raise "Task #{self.id} is completed" if completed?
       @started_date = Time.now
       @started = true
     end
