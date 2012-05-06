@@ -52,6 +52,10 @@ Given /^one of them is completed$/ do
   step %{I successfully run `claret done 1`}
 end
 
+Given /^another one of them has been completed$/ do
+  step %{I successfully run `claret done 2`}
+end
+
 Then /^the completed task should be highlighted with the completion date$/ do
   step %{the output should match /#{@locals[:tasks][1]} \\\(completed on .*\\\)/}
 end
@@ -59,4 +63,19 @@ end
 Then /^the second task should show up as in progress$/ do
   step %{I successfully run `claret ls`}
   step %{the output should match /#{@locals[:tasks][1]} \\\(started on .*\\\)/}
+end
+
+Given /^one of them has been started$/ do
+  @locals[:started_task_id] = 1
+  step %{I successfully run `claret task start 1`}
+end
+
+Then /^the output should show the started task only$/ do
+  @locals[:tasks].each_with_index do |task,index|
+    if index == @locals[:started_task_id]
+      step %{the output should match /#{task} \\\(started on .*\\\)/}
+    else
+      step %{the output should not contain "#{task}"}
+    end
+  end
 end

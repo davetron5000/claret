@@ -7,6 +7,13 @@ command [:list,:ls] do |c|
         Claret::TaskListTerminalSerializer.new(:all).write($task_list)
       end
     end
+
+    desc 'List only tasks in-progress'
+    command [:wip,:inprogress] do |wip|
+      wip.action do
+        Claret::TaskListTerminalSerializer.new(:wip).write($task_list)
+      end
+    end
   end
   c.action do |global_options,options,args|
     Claret::TaskListTerminalSerializer.new.write($task_list)

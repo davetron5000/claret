@@ -44,7 +44,21 @@ class TaskTest < TestCase
     }
     Then {
       assert @task.started?
+      assert @task.wip?
       refute_nil @task.started_date
+    }
+  end
+
+  test_that "a task can be started and completed, and is not wip" do
+    Given a_new_task
+    When {
+      @task.start!
+      @task.complete!
+    }
+    Then {
+      assert @task.started?
+      assert @task.completed?
+      refute @task.wip?
     }
   end
 

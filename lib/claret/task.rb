@@ -45,5 +45,10 @@ module Claret
       @started_date = Time.now
       @started = true
     end
+
+    # True if this task is started, but not completed?
+    def wip?
+      self.started? && !self.completed?
+    end
   end
 end
