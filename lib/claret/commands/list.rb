@@ -14,9 +14,14 @@ command [:list,:ls] do |c|
         Claret::TaskListTerminalSerializer.new(:wip).write($task_list)
       end
     end
+
+    desc 'List tasks that are not completed'
+    command [:tasks] do |tasks|
+      tasks.action do |global_options,options,args|
+        Claret::TaskListTerminalSerializer.new.write($task_list)
+      end
+    end
   end
-  c.action do |global_options,options,args|
-    Claret::TaskListTerminalSerializer.new.write($task_list)
-  end
+  c.default_command :tasks
 end
 

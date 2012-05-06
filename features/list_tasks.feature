@@ -7,6 +7,11 @@ Feature: I can list tasks
     When I successfully run `claret ls`
     Then the output should show the three tasks
 
+  Scenario: List tasks the long way
+    Given there are three tasks in the task list
+    When I successfully run `claret ls tasks`
+    Then the output should show the three tasks
+
   Scenario: List tasks is OK with there not being a task list
     Given there is no task list
     When I run `claret ls`
