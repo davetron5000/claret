@@ -47,3 +47,16 @@ end
 Then /^the help should be printed for "([^"]*)"$/ do |arg1|
   step %{the output should contain "task_id"}
 end
+
+Given /^one of them is completed$/ do
+  step %{I successfully run `claret done 1`}
+end
+
+Then /^the completed task should be highlighted with the completion date$/ do
+  step %{the output should match /#{@locals[:tasks][1]} \\\(completed on .*\\\)/}
+end
+
+Then /^the second task should show up as in progress$/ do
+  step %{I successfully run `claret ls`}
+  step %{the output should match /#{@locals[:tasks][1]} \\\(started on .*\\\)/}
+end

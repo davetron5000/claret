@@ -6,14 +6,7 @@ command :task do |task_command|
     desc 'Complete a task'
     command :done do |c|
       c.action do |global_options,options,args|
-        raise GLI::BadCommandLine,"task_id is required" if args.empty?
-        id = args[-1].to_i
-        task = $task_list.tasks.select {|_| _.id == id }.first
-        if task
-          task.complete!
-        else
-          exit_now!("No task with id #{id}, ids are #{$task_list.tasks.map(&:id).join(',')}",1)
-        end
+        $task_list.find(args[0]).complete!
       end
     end
 
@@ -21,6 +14,7 @@ command :task do |task_command|
     arg_name 'task_id'
     command :start do |c|
       c.action do |global_options,options,args|
+        $task_list.find(args[0]).start!
       end
     end
   end

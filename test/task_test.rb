@@ -12,6 +12,7 @@ class TaskTest < TestCase
     Then {
       assert_equal @task_name,@task.name
       refute @task.completed?
+      assert_nil @task.completed_date
     }
   end
 
@@ -32,6 +33,18 @@ class TaskTest < TestCase
     }
     Then {
       assert @task.completed?
+      refute_nil @task.completed_date
+    }
+  end
+
+  test_that "a task can be started" do
+    Given a_new_task
+    When {
+      @task.start!
+    }
+    Then {
+      assert @task.started?
+      refute_nil @task.started_date
     }
   end
 

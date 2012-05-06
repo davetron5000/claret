@@ -12,6 +12,13 @@ Feature: I can complete tasks
       |done      |
       |task done |
 
+  Scenario: Complete a task twice generates an error
+    Given there are three tasks in the task list
+    Given I successfully run `claret task done 1`
+    When I run `claret task done 1`
+    Then the exit status should not be 0
+    And the stderr should contain "Task 1 is already complete"
+
   Scenario: Complete a non-existent task generates an error
     Given there are three tasks in the task list
     When I run `claret done 4`

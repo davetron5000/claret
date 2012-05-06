@@ -21,5 +21,22 @@ module Claret
       @tasks << new_task
       @next_id = (@tasks.map(&:id).max + 1)
     end
+
+    # Iterate over each task
+    def each(&block)
+      @tasks.each(&block)
+    end
+
+    # Find a task by id, raising an exception if it's not there
+    #
+    # task_id:: the id to search for.  This will be coerced to an int, so you can safely pass in a string
+    #
+    # This will raise an exception if task_id is nil, or if the task could not be found
+    def find(task_id)
+      raise "task_id is required" if task_id.nil?
+      task = @tasks.select { |task| task.id == task_id.to_i }.first
+      raise "No task with id #{task_id}" if task.nil?
+      task
+    end
   end
 end

@@ -11,3 +11,10 @@ Feature: I can list tasks
     Given there is no task list
     When I run `claret ls`
     Then the exit status should be 0
+
+  Scenario: List all tasks, including completed ones
+    Given there are three tasks in the task list
+    And one of them is completed
+    When I successfully run `claret ls all`
+    Then the output should show the three tasks
+    And the completed task should be highlighted with the completion date
