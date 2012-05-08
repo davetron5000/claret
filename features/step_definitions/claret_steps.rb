@@ -88,3 +88,12 @@ end
 Then /^the output should show the started\/completed task's start and completed dates$/ do
   step %{the output should match /#{@locals[:tasks][@locals[:started_task_id]]} \\\(started on .*, completed on .*\\\)/}
 end
+
+Then /^task 1 should be gone$/ do
+  step %{I successfully run `claret ls`}
+  step %{the output should not contain "#{@locals[:tasks][1]}"}
+end
+
+Then /^there should be a task '(.*)'$/ do |task_name|
+  step %{the output should contain "#{task_name}"}
+end

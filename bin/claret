@@ -7,7 +7,7 @@ require 'yaml'
 
 include GLI::App
 
-program_desc 'Describe your application here'
+program_desc 'Manage a task list that can be easily decomposed into smaller tasks'
 
 version Claret::VERSION
 

@@ -1,4 +1,8 @@
 desc 'List tasks'
+long_desc <<EOS
+List the tasks in your task list, possibly including completed tasks.  By default, this will list
+all uncompleted tasks.
+EOS
 command [:list,:ls] do |c|
   c.instance_eval do
     desc 'List all tasks, including completed ones'
@@ -9,7 +13,7 @@ command [:list,:ls] do |c|
     end
 
     desc 'List only tasks in-progress'
-    command [:wip,:inprogress] do |wip|
+    command :wip do |wip|
       wip.action do
         Claret::TaskListTerminalSerializer.new(:wip).write($task_list)
       end

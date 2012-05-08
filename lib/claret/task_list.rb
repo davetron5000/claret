@@ -38,5 +38,19 @@ module Claret
       raise "No task with id #{task_id}" if task.nil?
       task
     end
+
+    # Split the given task with the given id into several new_tasks.
+    # The existing task will be deleted.
+    #
+    # task_id:: id of the task to split
+    # new_tasks:: array of String representing the new tasks
+    def split(task_id,new_tasks)
+      raise "must split a task into at least two tasks" if new_tasks.size < 2
+      task_to_split = self.find(task_id)
+      self.tasks.delete(task_to_split)
+      new_tasks.each do |new_task|
+        self << Claret::Task.new(new_task)
+      end
+    end
   end
 end
