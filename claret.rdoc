@@ -1,5 +1,75 @@
-= claret
+== claret - Manage a task list that can be easily decomposed into smaller tasks
 
-Generate this with
-    claret rdoc
-After you have described your command line interface
+v0.0.1
+
+=== Global Options
+=== --help
+Show this message
+
+
+
+
+=== --version
+
+
+
+
+
+=== Commands
+==== add task name
+Add a new task to do
+
+
+Add a new task to the list.  The task name can be specified with or without quotes
+==== help command
+Shows a list of commands or help for one command
+
+
+Gets help for the application or its commands. Can also list the commands in a way helpful to creating a bash-style completion function
+==== list 
+List tasks
+
+[Aliases] ls
+
+List the tasks in your task list, possibly including completed tasks.  By default, this will list
+all uncompleted tasks.
+===== Commands
+====== all 
+List all tasks, including completed ones
+
+
+
+====== tasks 
+List tasks that are not completed
+
+
+
+====== wip 
+List only tasks in-progress
+
+
+
+[Default Command] tasks
+==== task task_id
+Complete, start, or split up tasks in your task list
+
+
+
+===== Commands
+====== done 
+Complete a task
+
+
+
+====== split task, task[, task]*
+Split a task into two or more subtasks
+
+
+Decomposes a task into more tasks, to make it easier to show progress.  The task names can be specified
+in two ways:  a comma delimited list, unquotes, or a series of quoted arguments.  The task you split
+will be removed and replaced with the new tasks
+====== start task_id
+Start a task
+
+
+
