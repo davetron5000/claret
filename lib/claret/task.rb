@@ -13,6 +13,9 @@ module Claret
     # Date on which this task was started
     attr_accessor :started_date
 
+    attr_reader :tasks_depending_on_me
+    attr_reader :tasks_i_depend_on
+
     # Create a new, incomplete task with the given name
     #
     # name:: name of the task, i.e. what to do to complete task
@@ -20,6 +23,8 @@ module Claret
       @name = name.dup
       @name.force_encoding("UTF-8")
       @completed = false
+      @tasks_i_depend_on = []
+      @tasks_depending_on_me = []
     end
 
     # True if this task was completed
@@ -50,6 +55,16 @@ module Claret
     # True if this task is started, but not completed?
     def wip?
       self.started? && !self.completed?
+    end
+
+    def depends_on(other_task)
+      @tasks_i_depend_on << other_task
+      other_task.tasks_depending_on_me << self
+    end
+
+    def no_longer_depends_on(other_task)
+      @tasks_i_depend_on.delete(other_task)
+      other_task.tasks_depending_on_me.delete(self)
     end
   end
 end

@@ -97,3 +97,11 @@ end
 Then /^there should be a task '(.*)'$/ do |task_name|
   step %{the output should contain "#{task_name}"}
 end
+
+Then /^the output should indicate that task (\d+) depends on task (\d+)$/ do |id1, id2|
+  step %{the output should contain "depends on [#{id2}]"}
+end
+
+Then /^the output should indicate that task (\d+) doesn't depend on task (\d+)$/ do |id1, id2|
+  step %{the output should not contain "depends on [#{id2}]"}
+end

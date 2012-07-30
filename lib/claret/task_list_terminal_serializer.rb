@@ -13,7 +13,12 @@ module Claret
     # task_list:: A Claret::TaskList to print
     def write(task_list)
       task_list.each do |task|
-        printf("[%d] %s%s\n",task.id,task.name,additional_info(task)) if PRINT[@options].call(task)
+        if PRINT[@options].call(task)
+          printf("[%d] %s%s\n",task.id,task.name,additional_info(task))
+          task.tasks_i_depend_on.each do |task_i_depend_on|
+            printf("%sdepends on [%d] %s\n",' ' * (task.id.to_s.length + 3),task_i_depend_on.id,task_i_depend_on.name)
+          end
+        end
       end
     end
 

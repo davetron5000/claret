@@ -52,5 +52,22 @@ module Claret
         self << Claret::Task.new(new_task)
       end
     end
+
+    # Create a dependency between two tasks.  The task identified
+    # by +task_id+ will depend on the task identified by +depends_on_task_id+
+    #
+    # task_id:: id of the task that will depend on the other task
+    # depends_on_task_id:: id of the task that +task_id+ depends on 
+    def create_dependency(task_id,depends_on_task_id)
+      task = self.find(task_id)
+      depends_on_task = self.find(depends_on_task_id)
+      task.depends_on(depends_on_task)
+    end
+
+    def break_dependency(task_id,depends_on_task_id)
+      task = self.find(task_id)
+      depends_on_task = self.find(depends_on_task_id)
+      task.no_longer_depends_on(depends_on_task)
+    end
   end
 end
