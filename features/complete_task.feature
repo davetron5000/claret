@@ -30,7 +30,7 @@ Feature: I can complete tasks
   Scenario: Complete a task that depends on a complete task is OK
     Given there are three tasks in the task list
     And task 1 depends on task 2
-    And task 2 is copmleted
+    And task 2 is completed
     When I run `claret task done 1`
     Then the exit status should be 0
 

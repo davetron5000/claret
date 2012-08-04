@@ -19,6 +19,14 @@ command [:list,:ls] do |c|
       end
     end
 
+    desc 'List only tasks that can be worked on now'
+    command [:s,:startable] do |s|
+      s.action do
+        Claret::TaskListTerminalSerializer.new(:startable).write($task_list)
+      end
+    end
+
+
     desc 'List tasks that are not completed'
     command [:tasks] do |tasks|
       tasks.action do |global_options,options,args|

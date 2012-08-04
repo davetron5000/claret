@@ -48,6 +48,7 @@ module Claret
     def start!
       raise "Task #{self.id} is already started" if started?
       raise "Task #{self.id} is completed" if completed?
+      raise "Task #{self.id} depends on incomplete tasks, you must do those first" unless @tasks_i_depend_on.all? { |task| task.completed? }
       @started_date = Time.now
       @started = true
     end

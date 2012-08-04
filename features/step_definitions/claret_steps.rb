@@ -110,6 +110,6 @@ Given /^task (\d+) depends on task (\d+)$/ do |id1, id2|
   step %{I successfully run `claret task depend #{id1} #{id2}`}
 end
 
-Given /^task (\d+) is copmleted$/ do |id1|
+Given /^task (\d+) is completed$/ do |id1|
   step %{I successfully run `claret task done #{id1}`}
 end

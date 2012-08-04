@@ -4,6 +4,7 @@ module Claret
     #           :all - all tasks are printed
     #           :wip - started, but uncompleted tasks
     #           :incomplete - uncompleted tasks
+    #           :startable - tasks that can be started now
     def initialize(options=:incomplete)
       @options = options 
     end
@@ -29,6 +30,7 @@ module Claret
       :all        => lambda { |task| true },
       :wip        => lambda { |task| task.wip? },
       :incomplete => lambda { |task| !task.completed? },
+      :startable  => lambda { |task| task.tasks_i_depend_on.all? { |t| t.completed? }},
     }
 
     ADDITIONAL = [
