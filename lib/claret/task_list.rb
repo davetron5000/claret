@@ -47,10 +47,11 @@ module Claret
     def split(task_id,new_tasks)
       raise "must split a task into at least two tasks" if new_tasks.size < 2
       task_to_split = self.find(task_id)
-      self.tasks.delete(task_to_split)
-      new_tasks.each do |new_task|
-        self << Claret::Task.new(new_task)
+      split_tasks = task_to_split.split(new_tasks)
+      split_tasks.each do |new_task|
+        self << new_task
       end
+      @tasks.delete(task_to_split)
     end
 
     # Create a dependency between two tasks.  The task identified
@@ -64,10 +65,22 @@ module Claret
       task.depends_on(depends_on_task)
     end
 
+    # Break a dependency between two tasks by id
     def break_dependency(task_id,depends_on_task_id)
       task = self.find(task_id)
       depends_on_task = self.find(depends_on_task_id)
       task.no_longer_depends_on(depends_on_task)
+    end
+
+    def to_s
+      "".tap { |string|
+        self.each do |task|
+          string << task.id << "\n"
+          string << "  tasks_i_depend_on:     [#{task.tasks_i_depend_on.map(&:id).join(',')}]\n"
+          string << "  tasks_depending_on_me: [#{task.send(:tasks_depending_on_me).map(&:id).join(',')}]\n"
+          string << "\n"
+        end
+      }
     end
   end
 end

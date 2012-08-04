@@ -105,3 +105,11 @@ end
 Then /^the output should indicate that task (\d+) doesn't depend on task (\d+)$/ do |id1, id2|
   step %{the output should not contain "depends on [#{id2}]"}
 end
+
+Given /^task (\d+) depends on task (\d+)$/ do |id1, id2|
+  step %{I successfully run `claret task depend #{id1} #{id2}`}
+end
+
+Given /^task (\d+) is copmleted$/ do |id1|
+  step %{I successfully run `claret task done #{id1}`}
+end

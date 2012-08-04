@@ -6,7 +6,7 @@ module TaskHelper
   end
 
   def any_task
-    Task.new(any_sentence)
+    Task.new(any_sentence(:max => 3))
   end
 
   def task

@@ -101,7 +101,37 @@ class TaskListTest < TestCase
     }
   end
 
+  test_that "when splitting a task, the dependencies are allocated correctly" do
+    Given a_task_list
+    And {
+      @task_list.create_dependency(@task1.id,@task2.id)
+      @task_list.create_dependency(@task2.id,@task3.id)
+      @new_task1_name = 'foo'
+      @new_task2_name = 'bar'
+    }
+    When {
+      @task_list.split(@task2.id,[@new_task1_name,@new_task2_name])
+    }
+    Then {
+      assert_depends_on @task1,task_named(@new_task1_name,@task_list)
+      assert_depends_on @task1,task_named(@new_task2_name,@task_list)
+      assert_depends_on task_named(@new_task1_name,@task_list),@task3
+      assert_depends_on task_named(@new_task2_name,@task_list),@task3
+    }
+  end
+
 private
+
+  def assert_depends_on(task1,task2)
+    assert task1.depends_on?(task2),"'#{task1}' doesn't depend on '#{task2}' (it, in fact, depends on #{task1.tasks_i_depend_on.join(',')})"
+  end
+
+  def task_named(task_name,task_list)
+    task_list.each do |task|
+      return task if task.name == task_name
+    end
+    raise "No such task named #{task_name}; test is borked"
+  end
 
   def a_task_list
     lambda {

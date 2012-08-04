@@ -20,6 +20,20 @@ Feature: I can complete tasks
     Then the exit status should not be 0
     And the stderr should contain "No task with id 4"
 
+  Scenario: Complete a task that depends on an incomplete task generates an error
+    Given there are three tasks in the task list
+    And task 1 depends on task 2
+    When I run `claret task done 1`
+    Then the exit status should not be 0
+    And the stderr should contain "Task 1 depends on incomplete tasks"
+
+  Scenario: Complete a task that depends on a complete task is OK
+    Given there are three tasks in the task list
+    And task 1 depends on task 2
+    And task 2 is copmleted
+    When I run `claret task done 1`
+    Then the exit status should be 0
+
   Scenario: Missing the index generates error and help
     Given there are three tasks in the task list
     When I run `claret task done`

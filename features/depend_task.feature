@@ -1,4 +1,3 @@
-@wip
 Feature: I can make tasks depend on each other
   In order to model dependencies between things
   I want to specify that one task cannot be completed until another is
