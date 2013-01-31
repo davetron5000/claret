@@ -1,6 +1,6 @@
 = claret
 
-Describe your project here
+`claret` is a command-line todo-list app based around dependencies.  Tasks can be dependent on one another, such that you can see only which tasks need can be started and which tasks are blocking which others.
 
 :include:claret.rdoc
 
